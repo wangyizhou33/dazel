@@ -1,0 +1,5 @@
+bazel-bin
+bazel-dazel
+bazel-out
+bazel-testlogs
+.dazel_run
