@@ -1,3 +1,9 @@
+// source code:
+// https://www.geeksforgeeks.org/socket-programming-cc/
+
+// setting non-blocking socket
+// https://stackoverflow.com/questions/1543466/how-do-i-change-a-tcp-socket-to-be-non-blocking/1549344
+
 // Client side C/C++ program to demonstrate Socket programming
 #include <stdio.h>
 #include <sys/socket.h>
@@ -33,10 +39,11 @@ int main(int argc, char const *argv[])
         printf("\nConnection Failed \n");
         return -1;
     }
-    send(sock , hello , strlen(hello) , 0 );
-    printf("Hello message sent\n");
+
     valread = read( sock , buffer, 1024);
     printf("%s\n",buffer );
     (void) valread;
+    (void) hello;
+    while (true){} // otherwise, server side will see "Error Connection reset by peer"
     return 0;
 }

@@ -1,3 +1,9 @@
+// source code:
+// https://www.geeksforgeeks.org/socket-programming-cc/
+
+// setting non-blocking socket
+// https://stackoverflow.com/questions/1543466/how-do-i-change-a-tcp-socket-to-be-non-blocking/1549344
+
 // Server side C/C++ program to demonstrate Socket programming
 #include <unistd.h>
 #include <stdio.h>
@@ -5,6 +11,17 @@
 #include <stdlib.h>
 #include <netinet/in.h>
 #include <string.h>
+#include <errno.h>
+
+void printLastError(int ret)
+{
+    if(ret == -1)
+    {
+        printf("Error %s\n", strerror(errno));
+    }
+    // else no error, print nothing
+}
+
 #define PORT 8080
 int main(int argc, char const *argv[])
 {
@@ -45,16 +62,20 @@ int main(int argc, char const *argv[])
         perror("listen");
         exit(EXIT_FAILURE);
     }
-    if ((new_socket = accept(server_fd, (struct sockaddr *)&address,
-                    (socklen_t*)&addrlen))<0)
+    if ((new_socket = accept4(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen, SOCK_NONBLOCK))<0)
     {
         perror("accept");
         exit(EXIT_FAILURE);
     }
-    valread = read( new_socket , buffer, 1024);
-    printf("%s\n",buffer );
-    send(new_socket , hello , strlen(hello) , 0 );
+
+    int cnt = 0;
+    while(true)
+    {
+        printf("%d\n", cnt++);
+        printLastError(send(new_socket , hello , strlen(hello) , 0 ));
+    }
     printf("Hello message sent\n");
     (void)valread;
+    (void)buffer;
     return 0;
 }
