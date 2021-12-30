@@ -3,6 +3,16 @@
 Learn dazel/bazel with this repository.
 
 ```bash
-$ pip3 install dazel
-$ git push -u origin master
+    $ pip3 install dazel
+    $ git push -u origin master
+```
+
+## socket
+Run the two commands in two terminals in order
+
+```bash
+    $ dazel run //socket:server
+```
+```bash
+    $ dazel run //socket:client
 ```
