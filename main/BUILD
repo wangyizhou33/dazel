@@ -6,5 +6,6 @@ cc_binary(
     deps = [
         "@com_google_googletest//:gtest_main",
         "@eigen",
+        "@boost//:algorithm"
         ],
 )

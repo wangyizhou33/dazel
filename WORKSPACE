@@ -17,3 +17,14 @@ http_archive(
     url = "https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz",
     strip_prefix="eigen-3.4.0"
 )
+
+# Boost
+# https://github.com/nelhage/rules_boost
+http_archive(
+    name = "com_github_nelhage_rules_boost",
+    url = "https://github.com/nelhage/rules_boost/archive/refs/heads/master.zip",
+    strip_prefix="rules_boost-master"
+)
+
+load("@com_github_nelhage_rules_boost//:boost/boost.bzl", "boost_deps")
+boost_deps()

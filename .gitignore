@@ -3,3 +3,4 @@ bazel-dazel
 bazel-out
 bazel-testlogs
 .dazel_run
+.vscode/
