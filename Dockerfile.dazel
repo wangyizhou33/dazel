@@ -1,20 +1,22 @@
-FROM nvidia/opengl:base-ubuntu18.04 
+FROM ubuntu:24.04
 
-# Creating the man pages directory to deal with the slim variants not having it.
-RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl gnupg \
- && echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" > \
-         /etc/apt/sources.list.d/bazel.list \
- && curl https://bazel.build/bazel-release.pub.gpg | apt-key add - \
- && apt-get update && apt-get install -y --no-install-recommends bazel \
- && apt-get purge --auto-remove -y curl gnupg \
- && rm -rf /etc/apt/sources.list.d/bazel.list \
- && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl gnupg bazel-bootstrap
 
-# sandboxfs
-RUN apt-get update && apt-get install -y --no-install-recommends wget libfuse2 \
- && wget https://github.com/bazelbuild/sandboxfs/releases/download/sandboxfs-0.2.0/sandboxfs-0.2.0-20200420-linux-x86_64.tgz \ 
- && tar xzv -C /usr/local -f ./sandboxfs-0.2.0-20200420-linux-x86_64.tgz \
- && rm ./sandboxfs-0.2.0-20200420-linux-x86_64.tgz \
- && apt-get purge --auto-remove -y wget
+# # Creating the man pages directory to deal with the slim variants not having it.
+# RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl gnupg \
+#  && echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" > \
+#          /etc/apt/sources.list.d/bazel.list \
+#  && curl https://bazel.build/bazel-release.pub.gpg | apt-key add - \
+#  && apt-get update && apt-get install -y --no-install-recommends bazel \
+#  && apt-get purge --auto-remove -y curl gnupg \
+#  && rm -rf /etc/apt/sources.list.d/bazel.list \
+#  && rm -rf /var/lib/apt/lists/*
+
+# # sandboxfs
+# RUN apt-get update && apt-get install -y --no-install-recommends wget libfuse2 \
+#  && wget https://github.com/bazelbuild/sandboxfs/releases/download/sandboxfs-0.2.0/sandboxfs-0.2.0-20200420-linux-x86_64.tgz \ 
+#  && tar xzv -C /usr/local -f ./sandboxfs-0.2.0-20200420-linux-x86_64.tgz \
+#  && rm ./sandboxfs-0.2.0-20200420-linux-x86_64.tgz \
+#  && apt-get purge --auto-remove -y wget
 
 ENV PATH="/user/local/bin:${PATH}"
